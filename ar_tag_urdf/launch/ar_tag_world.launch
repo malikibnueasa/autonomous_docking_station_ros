@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <launch>
+        
+        <param name="robot_description" textfile="$(find ar_tag_urdf)/urdf/ar_tag.urdf"/>
+        <arg name="x" default="0.0" />
+        <arg name="y" default="0.0" />
+        <arg name="z" default="0.0" />
+        <arg name="roll" default="0"/>
+        <arg name="pitch" default="0"/>
+        <arg name="yaw" default="0.0" />
+        
+        <arg name="urdf_robot_file" default="" />
+        <arg name="robot_name" default="" />
+        
+        <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+        <!-- This Version was created due to some errors seen in the V1 that crashed GAzebo or went too slow in spawn -->
+        <!-- Load the URDF into the ROS Parameter Server -->
+        <!-- <param name="robot_description" command="cat $(arg urdf_robot_file)" /> -->
+        
+        <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-urdf -model ar_tag_robot -param robot_description"/>    
+    </launch>

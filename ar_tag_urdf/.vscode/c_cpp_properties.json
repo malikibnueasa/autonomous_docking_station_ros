@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/king/malik_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/king/malik_ws/src/ar_tag_urdf/include/**",
+        "/home/king/malik_ws/src/ar_track_alvar/ar_track_alvar/include/**",
+        "/home/king/malik_ws/src/battery/include/**",
+        "/home/king/catkin_ws/src/goal_pub/include/**",
+        "/home/king/catkin_ws/src/image_vector/include/**",
+        "/home/king/catkin_ws/src/inverse_kinematics/include/**",
+        "/home/king/catkin_ws/src/trajectory_controll_pub/include/**",
+        "/home/king/malik_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/king/malik_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/home/king/malik_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
