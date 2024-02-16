@@ -6,6 +6,7 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from geometry_msgs.msg import Pose
 from time import sleep
 from std_msgs.msg import Bool
+from docking_control.srv import DockingControll
 
 
 class MoveNode:
@@ -49,7 +50,7 @@ class MoveNode:
             self.go_to(4.3941970305451905, -0.23586030441848677, -0.10364319482621749)
         elif loc == 4:
             rospy.loginfo("Heading to Charging Docking Station")
-            self.go_to(4.3941970305451905, -0.23586030441848677, -0.10364319482621749)
+            self.go_to(-2.0051151351292056, -1.7634009871534366, -1.5646617718789366)
 
     def cancel_goal(self):
         self.client.cancel_goal()
@@ -59,7 +60,23 @@ class MoveNode:
         
         self.cancel_goal()
         self.home_position(4)
-        
+        self.service_call_docking()
+
+    def service_call_docking(self):
+        rospy.wait_for_service('docking_service')
+        try:
+            rospy.loginfo("Aligning Robot to Docking Station")
+            server_proxy = rospy.ServiceProxy('docking_service', DockingControll)
+            response = server_proxy()
+            if response.value == 1:
+                rospy.loginfo("Fully")
+                self.is_charging_flag = False
+            else:
+                rospy.loginfo("Docking failed")
+                self.is_charging_flag = True
+
+        except rospy.ServiceException as e:
+            print('Servide call failed: ')    
 
     def loop_navigation(self):
         if self.counter == 0:
