@@ -5,9 +5,9 @@ import time
 from std_msgs.msg import Bool, String
 
 initial_battery_percentage = 100
-battery_life = 300
+battery_life = 10
 cutoff_battery_percentage = 30
-charging_time = 120
+charging_time = 10
 
 class BatteryManager:
     def __init__(self,initial_battery_percentage, battery_life, cutoff_battery_percentage, charging_time):
@@ -22,10 +22,9 @@ class BatteryManager:
         self.publisher_battery_manager_log = rospy.Publisher('battery_status_logger', String, queue_size=10)
 
     def flag_check(self, msg):
-        if msg.data == True:
-            self.is_charging_flag = True
-        else:
-            self.is_charging_flag = False
+        
+        self.is_charging_flag = msg.data
+        
 
     def run(self):
         rospy.Subscriber('battery_charging_mode', Bool, self.flag_check)
@@ -50,6 +49,7 @@ class BatteryManager:
             time.sleep(1)
             if self.current_battery_percentage <= self.cutoff_battery_percentage and self.current_battery_percentage > 0:
                 self.publisher_low_power_status.publish(True)
+                time.sleep(2)
                 rospy.loginfo("Battery is low, Searching for Docking station.")
                 self.publisher_battery_manager_log.publish("Battery is low, Searching for Docking station.")
             elif self.current_battery_percentage <= 0:
@@ -75,6 +75,7 @@ class BatteryManager:
             time.sleep(1)
         if self.current_battery_percentage == 100:
             rospy.loginfo("Fully Charged!!")
+            self.publisher_low_power_status.publish(False)
             self.publisher_battery_manager_log.publish("Fully Charged!!") 
         else:
             pass

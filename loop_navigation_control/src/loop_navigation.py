@@ -2,6 +2,7 @@
 
 import rospy
 import actionlib
+import time
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from geometry_msgs.msg import Pose
 from time import sleep
@@ -94,6 +95,7 @@ class MoveNode:
 
     def flag_check(self, msg):
         self.is_charging_flag = msg.data
+        
 
     def run(self):
         try:
